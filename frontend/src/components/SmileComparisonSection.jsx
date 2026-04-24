@@ -22,44 +22,67 @@ function clamp(value, min, max) {
 function SmileComparisonSection() {
   const [position, setPosition] = useState(50)
   const [isDragging, setIsDragging] = useState(false)
-  const [isReady, setIsReady] = useState(false)
   const sliderRef = useRef(null)
+  const activePointerIdRef = useRef(null)
+  const frameRef = useRef(0)
+  const pendingPositionRef = useRef(50)
+  const boundsRef = useRef(null)
   const beforeClipPath = `inset(0 ${100 - position}% 0 0)`
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setIsReady(true), 120)
-    return () => window.clearTimeout(timer)
+    return () => {
+      if (frameRef.current) {
+        window.cancelAnimationFrame(frameRef.current)
+      }
+    }
   }, [])
 
-  useEffect(() => {
-    function onPointerMove(event) {
-      if (!isDragging || !sliderRef.current) return
+  function schedulePositionUpdate(nextPosition) {
+    pendingPositionRef.current = clamp(nextPosition, 0, 100)
 
-      const bounds = sliderRef.current.getBoundingClientRect()
-      const nextPosition = ((event.clientX - bounds.left) / bounds.width) * 100
-      setPosition(clamp(nextPosition, 0, 100))
+    if (frameRef.current) return
+
+    frameRef.current = window.requestAnimationFrame(() => {
+      frameRef.current = 0
+      setPosition(pendingPositionRef.current)
+    })
+  }
+
+  function updatePositionFromClientX(clientX) {
+    const bounds = boundsRef.current || sliderRef.current?.getBoundingClientRect()
+    if (!bounds || !bounds.width) return
+
+    const nextPosition = ((clientX - bounds.left) / bounds.width) * 100
+    schedulePositionUpdate(nextPosition)
+  }
+
+  function endDrag(event) {
+    if (activePointerIdRef.current !== event.pointerId) return
+
+    if (sliderRef.current?.hasPointerCapture(event.pointerId)) {
+      sliderRef.current.releasePointerCapture(event.pointerId)
     }
-
-    function onPointerUp() {
-      setIsDragging(false)
-    }
-
-    window.addEventListener('pointermove', onPointerMove)
-    window.addEventListener('pointerup', onPointerUp)
-
-    return () => {
-      window.removeEventListener('pointermove', onPointerMove)
-      window.removeEventListener('pointerup', onPointerUp)
-    }
-  }, [isDragging])
+    activePointerIdRef.current = null
+    boundsRef.current = null
+    setIsDragging(false)
+  }
 
   function startDrag(event) {
     if (!sliderRef.current) return
 
+    event.preventDefault()
+    activePointerIdRef.current = event.pointerId
+    boundsRef.current = sliderRef.current.getBoundingClientRect()
+    sliderRef.current.setPointerCapture(event.pointerId)
     setIsDragging(true)
-    const bounds = sliderRef.current.getBoundingClientRect()
-    const nextPosition = ((event.clientX - bounds.left) / bounds.width) * 100
-    setPosition(clamp(nextPosition, 0, 100))
+    updatePositionFromClientX(event.clientX)
+  }
+
+  function handlePointerMove(event) {
+    if (!isDragging || activePointerIdRef.current !== event.pointerId) return
+
+    event.preventDefault()
+    updatePositionFromClientX(event.clientX)
   }
 
   function handleKeyboard(event) {
@@ -108,8 +131,11 @@ function SmileComparisonSection() {
           <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_18px_40px_rgba(15,23,42,0.1)] md:p-4">
             <div
               ref={sliderRef}
-              className="relative isolate h-75 w-full overflow-hidden rounded-xl bg-slate-100 md:h-95"
+              className="relative isolate h-75 w-full overflow-hidden rounded-xl bg-slate-100 touch-none select-none cursor-ew-resize md:h-95"
               onPointerDown={startDrag}
+              onPointerMove={handlePointerMove}
+              onPointerUp={endDrag}
+              onPointerCancel={endDrag}
               role="region"
               aria-label="Before and after smile comparison"
             >
@@ -142,7 +168,7 @@ function SmileComparisonSection() {
               </div>
 
               <div
-                className={`absolute inset-y-0 z-20 cursor-ew-resize ${isReady ? 'transition-all duration-300' : ''}`}
+                className={`absolute inset-y-0 z-20 cursor-ew-resize ${isDragging ? '' : 'transition-[left] duration-200'}`}
                 style={{ left: `${position}%` }}
                 role="slider"
                 aria-label="Comparison slider handle"
