@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Dental service image fallback</title>
+  <desc id="desc">Neutral dental care themed fallback artwork.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e2f3f6" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)" />
+  <g fill="none" stroke="#0e7490" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+    <path d="M800 260c-95 0-170 74-170 168 0 113 77 229 170 301 93-72 170-188 170-301 0-94-75-168-170-168Z" />
+    <path d="M750 420c-13 34-48 69-96 95" />
+    <path d="M850 420c13 34 48 69 96 95" />
+  </g>
+  <text x="800" y="760" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="52" fill="#0f172a" opacity="0.85">
+    Dental Care
+  </text>
+</svg>

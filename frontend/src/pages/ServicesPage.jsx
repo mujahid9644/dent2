@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import SEO from '../components/SEO'
 import SectionHeader from '../components/ui/SectionHeader'
-import { getServiceImage } from '../config/serviceImages'
+import { resolveServiceImageSource } from '../config/serviceImages'
 import { breadcrumbSchema } from '../utils/seo'
 
 function ServicesPage({ settings, services }) {
@@ -35,7 +35,7 @@ function ServicesPage({ settings, services }) {
               >
                 <div className="relative overflow-hidden border-b border-slate-100">
                   <img
-                    src={service.image || getServiceImage(service.slug, service.name)}
+                    src={resolveServiceImageSource(service)}
                     alt={service.name}
                     loading="lazy"
                     className="h-52 w-full object-cover transition duration-500 group-hover:scale-[1.03]"

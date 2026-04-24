@@ -6,9 +6,9 @@ const SERVICE_IMAGE_BY_SLUG = {
   'scaling-polishing':
     'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=1400&q=80',
   'root-canal-treatment':
-    'https://smileandmove.co.uk/wp-content/uploads/2022/03/root-canal-treatment-thumb.jpg',
+    'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=1400&q=80',
   'tooth-extraction':
-    'https://th.bing.com/th/id/OIP.rhEebSWOweL4zwkbZS5ZRAHaE8?w=226&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3',
+    'https://images.unsplash.com/photo-1612277795421-9bc7706a4a41?auto=format&fit=crop&w=1400&q=80',
   'dental-filling':
     'https://images.unsplash.com/photo-1588776814546-daab30f310ce?auto=format&fit=crop&w=1400&q=80',
   'dental-crown-bridge':
@@ -18,13 +18,13 @@ const SERVICE_IMAGE_BY_SLUG = {
   'orthodontics-braces':
     'https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?auto=format&fit=crop&w=1400&q=80',
   'clear-aligners':
-    'https://res.cloudinary.com/dw8r48tmq/image/upload/v1774543165/cld-sample.jpg',
+    'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1400&q=80',
   'teeth-whitening':
-    'https://images.apollo247.in/pd-cms/cms/2023-07/Shutterstock_1450907246.jpg',
+    'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=1400&q=80',
   'cosmetic-dentistry':
-    'https://th.bing.com/th/id/OIP.mB0gjK8TQKTU5KJuwi_VtAHaDF?w=347&h=145&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3',
+    'https://images.unsplash.com/photo-1588776814546-ec7e5d8f7f8f?auto=format&fit=crop&w=1400&q=80',
   'pediatric-dentistry':
-    'https://th.bing.com/th/id/R.ce6c1080a71439b649bd45eaec4e88d4?rik=i7Z3geCquOJ0fw&pid=ImgRaw&r=0',
+    'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1400&q=80',
   'gum-treatment':
     'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1400&q=80',
   'wisdom-tooth-surgery':
@@ -34,7 +34,7 @@ const SERVICE_IMAGE_BY_SLUG = {
 }
 
 const FALLBACK_SERVICE_IMAGE =
-  'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1400&q=80'
+  '/images/service-fallback.svg'
 
 function normalizeServiceSlug(value) {
   return String(value || '')
@@ -52,6 +52,12 @@ export function getServiceImage(serviceSlug, serviceName) {
   if (SERVICE_IMAGE_BY_SLUG[normalizedName]) return SERVICE_IMAGE_BY_SLUG[normalizedName]
 
   return FALLBACK_SERVICE_IMAGE
+}
+
+export function resolveServiceImageSource(service) {
+  if (!service) return FALLBACK_SERVICE_IMAGE
+  if (typeof service.image === 'string' && service.image.trim()) return service.image
+  return getServiceImage(service.slug, service.name)
 }
 
 export { SERVICE_IMAGE_BY_SLUG, FALLBACK_SERVICE_IMAGE }

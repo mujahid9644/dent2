@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import SEO from '../components/SEO'
-import { getServiceImage } from '../config/serviceImages'
+import { FALLBACK_SERVICE_IMAGE, resolveServiceImageSource } from '../config/serviceImages'
 import { serviceCatalog } from '../data/siteContent'
 import { fetchServiceBySlug } from '../lib/api'
 import { breadcrumbSchema, serviceSchema } from '../utils/seo'
@@ -16,6 +16,7 @@ function ServiceDetailsPage({ settings }) {
   const [service, setService] = useState(localService)
   const [isLoading, setIsLoading] = useState(!localService)
   const [isImageLoaded, setIsImageLoaded] = useState(false)
+  const [currentImageSrc, setCurrentImageSrc] = useState(resolveServiceImageSource(localService))
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
@@ -27,6 +28,7 @@ function ServiceDetailsPage({ settings }) {
     setService(localService)
     setIsLoading(!localService)
     setIsImageLoaded(false)
+    setCurrentImageSrc(resolveServiceImageSource(localService))
 
     if (localService) {
       return () => {
@@ -85,7 +87,21 @@ function ServiceDetailsPage({ settings }) {
     )
   }
 
-  const serviceImage = service.image || getServiceImage(service.slug, service.name)
+  const serviceImage = resolveServiceImageSource(service)
+
+  useEffect(() => {
+    setIsImageLoaded(false)
+    setCurrentImageSrc(serviceImage)
+  }, [serviceImage])
+
+  const handleImageError = (event) => {
+    if (event.currentTarget.src.endsWith(FALLBACK_SERVICE_IMAGE)) {
+      setIsImageLoaded(true)
+      return
+    }
+    event.currentTarget.onerror = null
+    setCurrentImageSrc(FALLBACK_SERVICE_IMAGE)
+  }
 
   const schema = [
     serviceSchema(service, settings),
@@ -114,12 +130,13 @@ function ServiceDetailsPage({ settings }) {
               <div className="absolute inset-0 animate-pulse bg-linear-to-r from-slate-100 via-slate-200 to-slate-100" />
             )}
             <img
-              src={serviceImage}
+              src={currentImageSrc}
               alt={service.name}
               loading="eager"
               fetchPriority="high"
               decoding="async"
               onLoad={() => setIsImageLoaded(true)}
+              onError={handleImageError}
               className={`h-72 w-full object-cover transition-opacity duration-500 md:h-96 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
           </div>
