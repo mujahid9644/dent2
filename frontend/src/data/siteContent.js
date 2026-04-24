@@ -21,6 +21,7 @@ export const serviceCatalog = [
   const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 
   return {
+    title: name,
     name,
     slug,
     image: getServiceImage(slug, name),

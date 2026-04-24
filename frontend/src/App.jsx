@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import PageLayout from './components/layout/PageLayout'
 import { brandConfig } from './config/brandConfig'
+import { resolveServiceImageSource } from './config/serviceImages'
 import { blogPosts, doctorProfiles, faqs, galleryItems, serviceCatalog, testimonials as fallbackTestimonials } from './data/siteContent'
 import { fetchBlogs, fetchDoctors, fetchFAQs, fetchGallery, fetchServices, fetchSiteSettings, fetchTestimonials } from './lib/api'
 import AboutPage from './pages/AboutPage'
@@ -44,6 +45,22 @@ const defaultSettings = {
   accentColor: brandConfig.accentColor,
 }
 
+function normalizeServiceRecord(service) {
+  const title = service?.title || service?.name || ''
+  const slug = service?.slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+  const normalized = {
+    ...service,
+    title,
+    name: service?.name || title,
+    slug,
+  }
+
+  return {
+    ...normalized,
+    image: service?.image || resolveServiceImageSource(normalized),
+  }
+}
+
 function App() {
   const [settings, setSettings] = useState(defaultSettings)
   const [services, setServices] = useState(serviceCatalog)
@@ -83,7 +100,7 @@ function App() {
       }))
     })
 
-    fetchServices().then(setServices)
+    fetchServices().then((items) => setServices((items || []).map(normalizeServiceRecord)))
     fetchDoctors().then(setDoctors)
     fetchTestimonials().then(setTestimonials)
     fetchGallery().then(setGallery)
@@ -108,7 +125,7 @@ function App() {
         <Route path="/" element={<HomePage {...sharedProps} />} />
         <Route path="/about" element={<AboutPage settings={settings} />} />
         <Route path="/services" element={<ServicesPage settings={settings} services={services} />} />
-        <Route path="/services/:slug" element={<ServiceDetailsPage settings={settings} />} />
+        <Route path="/services/:slug" element={<ServiceDetailsPage settings={settings} services={services} />} />
         <Route path="/doctors" element={<DoctorsPage settings={settings} doctors={doctors} />} />
         <Route path="/doctors/:slug" element={<DoctorDetailsPage settings={settings} />} />
         <Route path="/gallery" element={<GalleryPage gallery={gallery} />} />
