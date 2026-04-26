@@ -6,9 +6,9 @@ const SERVICE_IMAGE_BY_SLUG = {
   'scaling-polishing':
     'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=1400&q=80',
   'root-canal-treatment':
-    'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=1400&q=80',
+    'https://tse1.explicit.bing.net/th/id/OIP.cSa80zWVpuqNhgJ7yxVR7gHaEv?w=875&h=561&rs=1&pid=ImgDetMain&o=7&rm=3',
   'tooth-extraction':
-    'https://images.unsplash.com/photo-1612277795421-9bc7706a4a41?auto=format&fit=crop&w=1400&q=80',
+    'https://cdn.shortpixel.ai/spai/q_lossless+w_1082+to_webp+ret_img/storage.googleapis.com/local-dentist-nearby/850x650/Tooth-Extraction.webp',
   'dental-filling':
     'https://images.unsplash.com/photo-1588776814546-daab30f310ce?auto=format&fit=crop&w=1400&q=80',
   'dental-crown-bridge':
@@ -20,15 +20,15 @@ const SERVICE_IMAGE_BY_SLUG = {
   'clear-aligners':
     'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1400&q=80',
   'teeth-whitening':
-    'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=1400&q=80',
+    'https://tse1.explicit.bing.net/th/id/OIP.XQIoV89ge8MapP4WdlleoAHaE8?w=612&h=408&rs=1&pid=ImgDetMain&o=7&rm=3',
   'cosmetic-dentistry':
-    'https://images.unsplash.com/photo-1588776814546-ec7e5d8f7f8f?auto=format&fit=crop&w=1400&q=80',
+    'https://www.1300smiles.com.au/media/1kpk0ht0/istock-1279150144-768x512.jpg?rmode=max&width=408&height=272',
   'pediatric-dentistry':
     'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1400&q=80',
   'gum-treatment':
     'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1400&q=80',
   'wisdom-tooth-surgery':
-    'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1400&q=80',
+    'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=1400&q=80',
   'smile-makeover':
     'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=1400&q=80',
 }

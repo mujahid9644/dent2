@@ -32,7 +32,7 @@ export const serviceCatalog = [
 })
 
 export const doctorProfiles = [
-  {
+  /*{
     name: 'Dr. Ayesha Rahman',
     slug: 'dr-ayesha-rahman',
     title: 'Consultant Dental Surgeon',
@@ -42,14 +42,14 @@ export const doctorProfiles = [
     years_of_experience: 12,
     bio: 'Known for calm communication and precision-led treatment planning for complex dental cases.',
     is_featured: true,
-  },
+  },    */
   {
-    name: 'Dr. Fahim Hasan',
-    slug: 'dr-fahim-hasan',
+    name: 'Dr. Mustak',
+    slug: 'dr-mustak',
     title: 'Orthodontic & Cosmetic Dentist',
     credentials: 'BDS, MSc Orthodontics',
     image_url:
-      'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=1200&q=80',
+      'https://scontent.fdac3-2.fna.fbcdn.net/v/t39.30808-6/470595130_1105656478237613_6998746177189950089_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=clAXV0Q4igkQ7kNvwHUEbR1&_nc_oc=AdpHek5Vn8F9yIUcDSrOVp2m1F7HnsUVTJMWqqoiBVRlv5QSdjmLhb2z9W73sAcaiRU&_nc_zt=23&_nc_ht=scontent.fdac3-2.fna&_nc_gid=9pfHqaXchbwDoroBGPRaNg&_nc_ss=7b289&oh=00_Af2akTenpcrhJDjWSMmxqjfzbZ_TW8Etd0-ivPLh4u-CDA&oe=69F3A509',
     years_of_experience: 9,
     bio: 'Specializes in braces, aligners, and smile design with a minimally invasive approach.',
     is_featured: true,
