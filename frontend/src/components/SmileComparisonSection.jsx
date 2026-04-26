@@ -6,7 +6,7 @@ const COMPARISON_IMAGES = {
   before:
     'https://res.cloudinary.com/dw8r48tmq/image/upload/v1777037203/cmp_vhzh2j.png',
   after:
-    'https://res.cloudinary.com/dw8r48tmq/image/upload/v1777037202/cmp_org_zfrxsj.png',
+    'https://res.cloudinary.com/dw8r48tmq/image/upload/v1777197501/cmp2_efmxye.png',
 }
 
 const TRUST_POINTS = [
